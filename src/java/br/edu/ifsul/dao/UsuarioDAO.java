@@ -1,6 +1,7 @@
+
 package br.edu.ifsul.dao;
 
-import br.edu.ifsul.modelo.Setor;
+import br.edu.ifsul.modelo.Usuario;
 import java.io.Serializable;
 import javax.ejb.Stateful;
 
@@ -11,10 +12,11 @@ import javax.ejb.Stateful;
  * @organization IFSUL - Campus Passo Fundo
  */
 @Stateful
-public class SetorDAO<T> extends DAOGenerico<Setor> implements Serializable {
+public class UsuarioDAO<T> extends DAOGenerico<Usuario> implements Serializable {
 
-    public SetorDAO(){
+    public  UsuarioDAO(){
         super();
-        super.classePersistente = Setor.class;
+        super.classePersistente = Usuario.class;
     }
+            
 }
