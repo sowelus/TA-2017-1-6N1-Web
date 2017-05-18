@@ -15,8 +15,50 @@
                                      actionListener="#{controleUsuario.novo()}"
                                      update="formEdicao formListagem"/>
                     <p:dataTable value="#{controleUsuario.dao.listaObjetos}" var="obj"
-                                 reflow="true" paginator="true"
-                                 rows="4">
+                                 reflow="true" id="listagem" >
+                        <f:facet name="header">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="7" styleClass="ui-panelgrid-blank"
+                                             layout="grid"
+            columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-3,
+            ui-grid-col-1, ui-grid-col-2, ui-grid-col-2">
+                                    <p:outputLabel value="Ordem:"/>
+                                    <p:selectOneMenu value="#{controleUsuario.dao.ordem}">
+                                        <f:selectItem itemLabel="ID" itemValue="id"/>
+                                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                                        <f:selectItem itemLabel="Usuário" itemValue="usuario"/>
+                                        <f:selectItem itemLabel="Setor" itemValue="setor.nome"/>
+                                        <p:ajax update="listagem"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Filtro"/>
+                                    <p:inputText value="#{controleUsuario.dao.filtro}"/>
+                                    <p:commandButton update="listagem"
+                                                     icon="ui-icon-search" title="Filtrar"/>
+                                    <p:outputLabel value="Máximo de objetos: "/>
+                                    <p:inputNumber value="#{controleUsuario.dao.maximoObjetos}"
+                                                   decimalPlaces="0" decimalSeparator=""
+                                                   thousandSeparator="">
+                                        <p:ajax update="listagem" event="blur"/>
+                                    </p:inputNumber>
+                                </p:panelGrid>
+                            </div>
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:outputLabel 
+                                value="#{controleUsuario.dao.mensagemNavegacao} &nbsp; &nbsp;"/>
+                            <p:commandButton actionListener="#{controleUsuario.dao.primeiro()}"
+                                             title="Primeiro" icon="ui-icon-seek-first"
+                                             update="listagem"/>
+                            <p:commandButton actionListener="#{controleUsuario.dao.anterior()}"
+                                             title="Anterior" icon="ui-icon-seek-prev"
+                                             update="listagem"/>                    
+                             <p:commandButton actionListener="#{controleUsuario.dao.proximo()}"
+                                             title="Próximo" icon="ui-icon-seek-next"
+                                             update="listagem"/>                    
+                            <p:commandButton actionListener="#{controleUsuario.dao.ultimo()}"
+                                             title="Ultimo" icon="ui-icon-seek-end"
+                                             update="listagem"/>                                                                             
+                        </f:facet>
                         <p:column headerText="ID">
                             <p:outputLabel value="#{obj.id}"/>
                         </p:column>
