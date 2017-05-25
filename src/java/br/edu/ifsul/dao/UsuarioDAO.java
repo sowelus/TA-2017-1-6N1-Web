@@ -18,5 +18,13 @@ public class UsuarioDAO<T> extends DAOGenerico<Usuario> implements Serializable 
         super();
         super.classePersistente = Usuario.class;
     }
+    
+    @Override
+    public Usuario getObjectById(Integer id) throws Exception {
+        Usuario obj = (Usuario) em.find(classePersistente, id);
+        /// inicializando a lista para não lazy inicialization exception
+        obj.getPermissoes().size();
+        return obj;
+    }    
             
 }

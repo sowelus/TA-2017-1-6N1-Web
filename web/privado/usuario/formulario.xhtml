@@ -50,7 +50,57 @@
                                      actionListener="#{controleUsuario.salvar()}"
                                      update="formEdicao :formListagem"/>
                 </p:panelGrid>
+                <h:panelGroup id="painelPermissao">
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2, ui-grid-col-20"
+                        layout="grid" styleClass="ui-panelgrid-blank"
+                        rendered="#{controleUsuario.editandoPermissao}">
+                        <f:facet name="header">
+                            <p:outputLabel value="Nova permissão do usuário"/>
+                        </f:facet>             
+                        <p:outputLabel value="Permissão"/>
+                        <p:selectOneMenu id="selectPermissao" value="#{controleUsuario.permissao}">
+                            <f:selectItem itemLabel="Selecione um registro" 
+                                          noSelectionOption="true"/>
+                            <f:selectItems value="#{controleUsuario.daoPermissao.listaTodos}"
+                                           var="p" itemLabel="#{p.nome}"/>
+                            <f:converter converterId="converterPermissao"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value=""/>
+                        <p:commandButton value="Salvar Permissão" icon="ui-icon-disk"
+                                         actionListener="#{controleUsuario.salvarPermissao()}"
+                                         id="btnSalvarPermissao"
+                                         process="btnSalvarPermissao selectPermissao"
+                                         update="@form"/>
+                    </p:panelGrid>
+                </h:panelGroup>
             </div>
+            <h:panelGroup id="listagemPermissoes">
+                <h:panelGroup rendered="#{!controleUsuario.editandoPermissao}">
+                    <p:commandButton value="Nova permissão" icon="ui-icon-plus"
+                                     actionListener="#{controleUsuario.novaPermissao()}"
+                                     update="painelPermissao listagemPermissoes"
+                                     process="@this"/>
+                    <p:dataTable value="#{controleUsuario.objeto.permissoes}"
+                                 var="per" reflow="true">
+                        <f:facet name="header">
+                            <p:outputLabel value="Permissões do usuário"/>
+                        </f:facet>
+                        <p:column headerText="Nome">
+                            <p:outputLabel value="#{per.nome}"/>
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <p:outputLabel value="#{per.descricao}"/>
+                        </p:column>
+                        <p:column headerText="Ações">
+                            <div align="center">
+                                <p:commandButton icon="ui-icon-trash"
+                                  actionListener="#{controleUsuario.removerPermissao(per)}"
+                                  process="@this" update="@form"/>
+                            </div>
+                        </p:column>                        
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:panelGroup>
         </h:panelGroup>
     </h:form>
 </html>
